@@ -1,0 +1,50 @@
+----------------------------------------------------------------------
+Group C
+Assignment :11
+Name of Student :Pawar Shrikant Sanjeev
+Roll NO: 47
+SE IT-DBMS LAB
+
+-----------------------------------------------------------------------
+mysql> use D9;
+Database changed
+mysql> select * from hotel_reg;
++---------+-------------------+----------+
+| room_no | name              | city     |
++---------+-------------------+----------+
+|     101 | Julia Roberts     | LA       |
+|     705 | Eddie Redmayne    | London   |
+|     508 | Zendaya Coleman   | LA       |
+|     203 | Park Seojun       | Seoul    |
+|     609 | Timothee Chalamet | New York |
++---------+-------------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> DELIMITER $$
+mysql> CREATE PROCEDURE list_name(INOUT name_list varchar(200))
+    -> BEGIN
+    -> DECLARE is_done INTEGER DEFAULT 0;
+    -> DECLARE c_name varchar(50) DEFAULT "";
+    -> DECLARE h_cursor CURSOR FOR
+    -> SELECT name FROM hotel_reg;
+    -> DECLARE CONTINUE HANDLER FOR NOT FOUND SET is_done = 1;
+    -> OPEN h_cursor;
+    -> get_list: LOOP
+    -> FETCH h_cursor INTO c_name;
+    -> IF is_done = 1 THEN
+    -> LEAVE get_list;
+    -> END IF;
+    -> SET name_list = CONCAT(c_name, ";", name_list);
+    -> END LOOP get_list;
+    -> CLOSE h_cursor;
+    -> END $$
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> DELIMITER ;
+mysql> SET @name_list ="";
+Query OK, 0 rows affected (0.00 s)
+
+
+
+
+-----------------------------------------------------------------------

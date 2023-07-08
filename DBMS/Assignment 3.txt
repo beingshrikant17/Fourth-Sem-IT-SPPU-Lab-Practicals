@@ -1,0 +1,48 @@
+----------------------------------------------------------------------
+Group A
+Assignment :3
+Name of Student : Pawar Shrikant Sanjeev
+Roll NO: 47
+SE IT-DBMS LAB
+
+-----------------------------------------------------------------------
+
+
+SQLite version 3.37.2 2022-01-06 13:25:41
+Enter ".help" for usage hints.
+Connected to a transient in-memory database.
+Use ".open FILENAME" to reopen on a persistent database.
+sqlite> .schema sqlite_master
+CREATE TABLE sqlite_master (
+  type text,
+  name text,
+  tbl_name text,
+  rootpage integer,
+  sql text
+);
+sqlite> sqlite kkw.db
+   ...> .quit;
+Error: in prepare, near "sqlite": syntax error (1)
+sqlite> create table t1(id int);
+sqlite> insert into t1 values(1);
+sqlite> select * from t1
+   ...> ;
+1
+sqlite> create table employees(
+   ...> id int primary key not null,
+   ...> name text not null,
+   ...> salary real not null,
+   ...> state text not null);
+sqlite> .table
+employees  t1
+sqlite> .schema
+CREATE TABLE t1(id int);
+CREATE TABLE employees(
+id int primary key not null,
+name text not null,
+salary real not null,
+state text not null);
+sqlite> insert into employees values(1, "Shrikant",50000, "Maharashtra");
+sqlite> select * from employees;
+1|Shrikant|50000.0|Maharashtra
+sqlite>

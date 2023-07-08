@@ -1,0 +1,82 @@
+----------------------------------------------------------------------
+Group C
+Assignment :9
+Name of Student : Pawar Shrikant Sanjeev
+Roll NO: 47
+SE IT-DBMS LAB
+
+-----------------------------------------------------------------------
+
+
+
+mysql: [Warning] C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe: ignoring option '--no-beep' due to invalid value ''.
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 18
+Server version: 8.0.16 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use kkw;
+Database changed
+mysql> select * from t1;
++--------+----------+-------------+-------+
+| rollno | name     | subject     | marks |
++--------+----------+-------------+-------+
+|      1 | Anushka  | Maths       |    29 |
+|      2 | Kunal    | Physics     |    25 |
+|      3 | Sakshi   | Chemistry   |    24 |
+|      4 | Mohit    | Biology     |    30 |
+|      5 | Shrikant | Physics     |    24 |
+|      6 | Utkarsh  | Electronics |    28 |
++--------+----------+-------------+-------+
+6 rows in set (0.00 sec)
+
+mysql> delimiter //
+mysql> create procedure display()
+    -> begin
+    -> select * from t1;
+    -> end //
+Query OK, 0 rows affected (0.17 sec)
+
+mysql> delimiter ;
+mysql> call display();
++--------+----------+-------------+-------+
+| rollno | name     | subject     | marks |
++--------+----------+-------------+-------+
+|      1 | Anushka  | Maths       |    29 |
+|      2 | Kunal    | Physics     |    25 |
+|      3 | Sakshi   | Chemistry   |    24 |
+|      4 | Mohit    | Biology     |    30 |
+|      5 | Shrikant | Physics     |    24 |
+|      6 | Utkarsh  | Electronics |    28 |
++--------+----------+-------------+-------+
+6 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> delimiter //
+mysql> create procedure marks_by_rollno(in rollnum int)
+    -> begin
+    -> select * from t1 where rollno = rollnum ;
+    -> end //
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> delimiter ;
+mysql> call marks_by_rollno( 1);
++--------+---------+---------+-------+
+| rollno | name    | subject | marks |
++--------+---------+---------+-------+
+|      1 | Anushka | Maths   |    29 |
++--------+---------+---------+-------+
+1 row in set (0.01 sec)
+
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>

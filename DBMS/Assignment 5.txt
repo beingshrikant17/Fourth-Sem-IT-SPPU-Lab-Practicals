@@ -1,0 +1,471 @@
+----------------------------------------------------------------------
+Group B
+Assignment :5
+Name of Student : Pawar Shrikant Sanjeev
+Roll NO: 47
+SE IT-DBMS LAB
+
+-----------------------------------------------------------------------
+
+                        1NF
+-----------------------------------------------------------------------
+
+Microsoft Windows [Version 10.0.19044.1645]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\DELL>mysql -hlocalhost -P3306 -uroot -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.26 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database GROUP_B;
+Query OK, 1 row affected (0.12 sec)
+
+mysql> use GROUP_B;
+Database changed
+mysql> create table lecture(`Course code` varchar(7) not null ,`Course Venue` varchar(20) not null default "Nashik", `Instructor Name` varchar(20) not null,`Instructor Phone Number` int not null);
+Query OK, 0 rows affected (0.13 sec)
+
+mysql> desc Lecture;
++-------------------------+-------------+------+-----+---------+-------+
+| Field                   | Type        | Null | Key | Default | Extra |
++-------------------------+-------------+------+-----+---------+-------+
+| Course code             | varchar(7)  | NO   |     | NULL    |       |
+| Course Venue            | varchar(20) | NO   |     | Nashik  |       |
+| Instructor Name         | varchar(20) | NO   |     | NULL    |       |
+| Instructor Phone Number | int         | NO   |     | NULL    |       |
++-------------------------+-------------+------+-----+---------+-------+
+4 rows in set (0.07 sec)
+
+mysql> select * from lecture;
+Empty set (0.01 sec)
+
+mysql> insert into lecture value("CS101","Lecture Hall 20","Prof Ronald",703073);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into lecture value("CS152","Lecture Hall 21","Prof John",962398);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from lecture;
++-------------+-----------------+-----------------+-------------------------+
+| Course code | Course Venue    | Instructor Name | Instructor Phone Number |
++-------------+-----------------+-----------------+-------------------------+
+| CS101       | Lecture Hall 20 | Prof Ronald     |                  703073 |
+| CS152       | Lecture Hall 21 | Prof John       |                  962398 |
++-------------+-----------------+-----------------+-------------------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into lecture value("CS154","CS Auditorium","Prof Ronald",703073);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from lecture;
++-------------+-----------------+-----------------+-------------------------+
+| Course code | Course Venue    | Instructor Name | Instructor Phone Number |
++-------------+-----------------+-----------------+-------------------------+
+| CS101       | Lecture Hall 20 | Prof Ronald     |                  703073 |
+| CS152       | Lecture Hall 21 | Prof John       |                  962398 |
+| CS154       | CS Auditorium   | Prof Ronald     |                  703073 |
++-------------+-----------------+-----------------+-------------------------+
+3 rows in set (0.00 sec)
+
+mysql> create table Instructor(`Instructor Id` int unique key not null,`Instructor Name` varchar(20) not null,`Instructor Phone Number` int not null);
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> desc instructor;
++-------------------------+-------------+------+-----+---------+-------+
+| Field                   | Type        | Null | Key | Default | Extra |
++-------------------------+-------------+------+-----+---------+-------+
+| Instructor Id           | int         | NO   | PRI | NULL    |       |
+| Instructor Name         | varchar(20) | NO   |     | NULL    |       |
+| Instructor Phone Number | int         | NO   |     | NULL    |       |
++-------------------------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> create table course(`Course Code` varchar(7) not null, `Course Venue` varchar(20) not null default "Nashik", `Instructor Id` int ,foreign key(`Instructor Id`) references instructor(`Instructor Id`));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc course;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| Course Code   | varchar(7)  | NO   |     | NULL    |       |
+| Course Venue  | varchar(20) | NO   |     | Nashik  |       |
+| Instructor Id | int         | YES  | MUL | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+3 rows in set (0.02 sec)
+
+mysql> insert into instructor values(1,"Prof Ronald ",703073);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into instructor values(2,"Prof John ",962398);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into course values("CS101","Lecture Hall 20 ",1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into course values("CS152","Lecture Hall 21 ",2);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into course values("CS154","CS Auditorium ",1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from course;
++-------------+------------------+---------------+
+| Course Code | Course Venue     | Instructor Id |
++-------------+------------------+---------------+
+| CS101       | Lecture Hall 20  |             1 |
+| CS152       | Lecture Hall 21  |             2 |
+| CS154       | CS Auditorium    |             1 |
++-------------+------------------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from instructor;
++---------------+-----------------+-------------------------+
+| Instructor Id | Instructor Name | Instructor Phone Number |
++---------------+-----------------+-------------------------+
+|             1 | Prof Ronald     |                  703073 |
+|             2 | Prof John       |                  962398 |
++---------------+-----------------+-------------------------+
+2 rows in set (0.00 sec)
+
+
+
+-----------------------------------------------------------------------
+
+                        2NF
+-----------------------------------------------------------------------
+
+mysql> create table student(`Student Name` varchar(20) not null, `Course Code` varchar(7) not null);
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> insert into student values("Shrikant","CS101");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values("Rahul","CS152");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values("Rahul","CS154");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values("Raman","CS101");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from student;
++--------------+-------------+
+| Student Name | Course Code |
++--------------+-------------+
+| Shrikant     | CS101       |
+| Rahul        | CS152       |
+| Rahul        | CS154       |
+| Raman        | CS101       |
++--------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> create table student_details(`Student Name` varchar(20), `Enrollment Number` int primary key);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> insert into student_details values("Rahul",1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student_details values("Shrikant",2);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student_details values("Raman",3);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> create table stud_Course(`Course ID` varchar(20),`Enrollment Number` int ,foreign key (`Enrollment Number`) references student_details(`Enrollment Number`));
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> select * from student_details;
++--------------+-------------------+
+| Student Name | Enrollment Number |
++--------------+-------------------+
+| Rahul        |                 1 |
+| Shrikant     |                 2 |
+| Raman        |                 3 |
++--------------+-------------------+
+3 rows in set (0.01 sec)
+
+mysql> insert into stud_Course values("CS101",2);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into stud_Course values("CS101",3);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into stud_Course values("CS152",1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into stud_Course values("CS154",1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from stud_course;
++-----------+-------------------+
+| Course ID | Enrollment Number |
++-----------+-------------------+
+| CS101     |                 2 |
+| CS101     |                 3 |
+| CS152     |                 1 |
+| CS154     |                 1 |
++-----------+-------------------+
+4 rows in set (0.00 sec)
+
+
+
+
+--------------------------------------------------------------------------------------
+
+                                 3NF
+
+--------------------------------------------------------------------------------------
+
+mysql> create table course_Instructors(`Course Code` varchar(20) not null, `Course Venue` varchar(20) not null,`Instructor Name` varchar(20),`Department` varchar(15));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> desc course_instructors;
++-----------------+-------------+------+-----+---------+-------+
+| Field           | Type        | Null | Key | Default | Extra |
++-----------------+-------------+------+-----+---------+-------+
+| Course Code     | varchar(20) | NO   |     | NULL    |       |
+| Course Venue    | varchar(20) | NO   |     | NULL    |       |
+| Instructor Name | varchar(20) | YES  |     | NULL    |       |
+| Department      | varchar(15) | YES  |     | NULL    |       |
++-----------------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> insert into course_instructors values("CS101","Lecture Hall 18", "Prof Ronald","Mathematics");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into course_instructors values("CS152","Auditirium Building", "Prof John","Electronics");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into course_instructors values("CS154","Lecture Hall 19", "Prof Ronald","Mathematics");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from course_instructors;
++-------------+---------------------+-----------------+-------------+
+| Course Code | Course Venue        | Instructor Name | Department  |
++-------------+---------------------+-----------------+-------------+
+| CS101       | Lecture Hall 18     | Prof Ronald     | Mathematics |
+| CS152       | Auditirium Building | Prof John       | Electronics |
+| CS154       | Lecture Hall 19     | Prof Ronald     | Mathematics |
++-------------+---------------------+-----------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> create table Instructors_Details(`Instructor ID` int primary key,`Instructor name` varchar(20),department varchar(20));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> insert into Instructors_Details values(1,"Prof Ponald","Mathematics");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Instructors_Details values(2,"Prof John","Electronics");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from Instructors_details;
++---------------+-----------------+-------------+
+| Instructor ID | Instructor name | department  |
++---------------+-----------------+-------------+
+|             1 | Prof Ponald     | Mathematics |
+|             2 | Prof John       | Electronics |
++---------------+-----------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> desc  Instructors_details;
++-----------------+-------------+------+-----+---------+-------+
+| Field           | Type        | Null | Key | Default | Extra |
++-----------------+-------------+------+-----+---------+-------+
+| Instructor ID   | int         | NO   | PRI | NULL    |       |
+| Instructor name | varchar(20) | YES  |     | NULL    |       |
+| department      | varchar(20) | YES  |     | NULL    |       |
++-----------------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> create table course_details(`Course Code` varchar(20),`Course Venue` varchar(20),`Instructor Id` int,foreign key (`Instructor ID`) references Instructors_details(`Instructor ID`));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc course_details;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| Course Code   | varchar(20) | YES  |     | NULL    |       |
+| Course Venue  | varchar(20) | YES  |     | NULL    |       |
+| Instructor Id | int         | YES  | MUL | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+3 rows in set (0.02 sec)
+
+mysql> insert into course_details values("CS101","Lecture Hall 18",1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into course_details values("CS152","Auditorium Building",2);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into course_details values("CS154","Lecture Hall 19",1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from course_details;
++-------------+---------------------+---------------+
+| Course Code | Course Venue        | Instructor Id |
++-------------+---------------------+---------------+
+| CS101       | Lecture Hall 18     |             1 |
+| CS152       | Auditorium Building |             2 |
+| CS154       | Lecture Hall 19     |             1 |
++-------------+---------------------+---------------+
+3 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------
+                              BCNF
+
+-------------------------------------------------------------------------------------------
+mysql>
+mysql> create table emp(`Emp ID` int not null, `Emp Country` varchar(10) not null, `Emp Department` varchar(20) not null, `Department Name` varchar(20) not null,`Emp Department Number` varchar(20) not null);
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> desc emp;
++-----------------------+-------------+------+-----+---------+-------+
+| Field                 | Type        | Null | Key | Default | Extra |
++-----------------------+-------------+------+-----+---------+-------+
+| Emp ID                | int         | NO   |     | NULL    |       |
+| Emp Country           | varchar(10) | NO   |     | NULL    |       |
+| Emp Department        | varchar(20) | NO   |     | NULL    |       |
+| Department Name       | varchar(20) | NO   |     | NULL    |       |
+| Emp Department Number | varchar(20) | NO   |     | NULL    |       |
++-----------------------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> insert into emp values(264,"India","Designing","D394",283);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp values(264,"India","Testing","D394",300);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into emp values(364,"UK","Stores","D283",232);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp values(364,"UK","Developing","D283",549);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from emp;
++--------+-------------+----------------+-----------------+-----------------------+
+| Emp ID | Emp Country | Emp Department | Department Name | Emp Department Number |
++--------+-------------+----------------+-----------------+-----------------------+
+|    264 | India       | Designing      | D394            | 283                   |
+|    264 | India       | Testing        | D394            | 300                   |
+|    364 | UK          | Stores         | D283            | 232                   |
+|    364 | UK          | Developing     | D283            | 549                   |
++--------+-------------+----------------+-----------------+-----------------------+
+4 rows in set (0.00 sec)
+
+mysql> create table ccountry (`EMp No` int not null,`Emp Country` varchar(20));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> insert into ccountry values (264,"India");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into ccountry values (264,"India");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from ccountry;
++--------+-------------+
+| EMp No | Emp Country |
++--------+-------------+
+|    264 | India       |
+|    264 | India       |
++--------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> create table EMP_DEPT(`Emp Department` varchar(20) not null,`Department Type` varchar(20) not null,`Emp Department Number` int not null);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc EMP_DEPT
+    -> ;
++-----------------------+-------------+------+-----+---------+-------+
+| Field                 | Type        | Null | Key | Default | Extra |
++-----------------------+-------------+------+-----+---------+-------+
+| Emp Department        | varchar(20) | NO   |     | NULL    |       |
+| Department Type       | varchar(20) | NO   |     | NULL    |       |
+| Emp Department Number | int         | NO   |     | NULL    |       |
++-----------------------+-------------+------+-----+---------+-------+
+3 rows in set (0.02 sec)
+
+mysql> insert into EMP_Dept values("Designing","D394",283);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into EMP_Dept values("Testing","D394",300);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into EMP_Dept values("Stores","D283",300);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into EMP_Dept values("Developing","D283",549);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from emp_dept;
++----------------+-----------------+-----------------------+
+| Emp Department | Department Type | Emp Department Number |
++----------------+-----------------+-----------------------+
+| Designing      | D394            |                   283 |
+| Testing        | D394            |                   300 |
+| Stores         | D283            |                   300 |
+| Developing     | D283            |                   549 |
++----------------+-----------------+-----------------------+
+4 rows in set (0.00 sec)
+
+mysql> create table Emp_Dept_Mapping(`Emp ID` varchar(20) not null,`Emp Dept` int not null);
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> desc EMP_DEPT_MAPPING;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| Emp ID   | varchar(20) | NO   |     | NULL    |       |
+| Emp Dept | int         | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> insert into EMp_DEPT_MApping values("D394",283);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into EMp_DEPT_MApping values("D394",300);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into EMp_DEPT_MApping values("283",232);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> delete from EMP_DEPT_MApping where `EMP ID`="283";
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into EMp_DEPT_MApping values("D283",232);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into EMp_DEPT_MApping values("D283",549);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from EMP_DEPT_MAPPING;
++--------+----------+
+| Emp ID | Emp Dept |
++--------+----------+
+| D394   |      283 |
+| D394   |      300 |
+| D283   |      232 |
+| D283   |      549 |
++--------+----------+
+4 rows in set (0.00 sec)
+
+
+----------------------------------------------------------------------------------------------

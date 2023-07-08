@@ -1,0 +1,118 @@
+----------------------------------------------------------------------
+Group C
+Assignment :10
+Name of Student :Pawar Shrikant Sanjeev
+Roll NO: 47
+SE IT-DBMS LAB
+
+
+-----------------------------------------------------------------------
+
+mysql> create database db12;
+Query OK, 1 row affected (0.08 sec)
+
+mysql> use db12;
+Database changed
+
+mysql> create trigger tt1
+    -> before insert on t1
+    -> for each row
+    -> set @ItemNo=@ItemNo+1;
+Query OK, 0 rows affected (0.27 sec)
+
+mysql> select @ItemNo;
++---------+
+| @ItemNo |
++---------+
+| NULL    |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select @ItemNo = 0;
++-------------+
+| @ItemNo = 0 |
++-------------+
+|        NULL |
++-------------+
+1 row in set (0.02 sec)
+
+mysql> select @ItemNo;
++---------+
+| @ItemNo |
++---------+
+| NULL    |
++---------+
+1 row in set (0.00 sec)
+
+mysql> set @ItemNo=55;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select @ItemNo;
++---------+
+| @ItemNo |
++---------+
+|      55 |
++---------+
+1 row in set (0.00 sec)
+
+mysql> set @ItemNo=0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select @ItemNo;
++---------+
+| @ItemNo |
++---------+
+|       0 |
++---------+
+1 row in set (0.00 sec)
+
+mysql> insert into t1 values(1,"Milk",20);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into t1 values(2,"Eggs",30);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> insert into t1 values(3,"Sauce",40);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into t1 values(4,"Pasta",50);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into t1 values(5,"Flour",60);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> select @ItemNo;
++---------+
+| @ItemNo |
++---------+
+|       5 |
++---------+
+1 row in set (0.00 sec)
+
+mysql> show triggers;
++---------+--------+-------+-----------------------+--------+-------------------
+-----+--------------------------------------------+----------------+------------
+----------+----------------------+--------------------+
+| Trigger | Event  | Table | Statement             | Timing | Created
+     | sql_mode                                   | Definer        | character_s
+et_client | collation_connection | Database Collation |
++---------+--------+-------+-----------------------+--------+-------------------
+-----+--------------------------------------------+----------------+------------
+----------+----------------------+--------------------+
+| tt1     | INSERT | t1    | set @ItemNo=@ItemNo+1 | BEFORE | 2022-04-18 11:58:1
+8.23 | STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION | root@localhost | cp850
+          | cp850_general_ci     | utf8mb4_0900_ai_ci |
++---------+--------+-------+-----------------------+--------+-------------------
+-----+--------------------------------------------+----------------+------------
+----------+----------------------+--------------------+
+1 row in set (0.26 sec)
+
+mysql> drop trigger tt1;
+Query OK, 0 rows affected (0.30 sec)
+
+mysql>
+
+
+
+
+-----------------------------------------------------------------------

@@ -1,0 +1,113 @@
+----------------------------------------------------------------------
+Group B
+Assignment :8
+Name of Student : Pawar Shrikant Sanjeev
+Roll NO: 47
+SE IT-DBMS LAB
+
+-----------------------------------------------------------------------
+
+C:\Users\DELL>mysql -hlocalhost -P3306 -uroot -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 14
+Server version: 8.0.26 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database view;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use view;
+Database changed
+
+mysql> CREATE TABLE customer (
+    ->      ID INT primary key ,
+    ->      name varchar(50),
+    ->      description text
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO customer VALUES (1, 'saleel', 'description Text 1'), (2, 'vrushali', 'description Text 2'), (3, 'sharmin',  'description Text 3'), (4, 'ruhan', 'description Text 4');
+Query OK, 4 rows affected (0.02 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from customer;
++----+----------+--------------------+
+| ID | name     | description        |
++----+----------+--------------------+
+|  1 | saleel   | description Text 1 |
+|  2 | vrushali | description Text 2 |
+|  3 | sharmin  | description Text 3 |
+|  4 | ruhan    | description Text 4 |
++----+----------+--------------------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE VIEW v2 AS SELECT * FROM customer, orders WHERE ID = customerID;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create view v3 as select * from customer;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from v3;
++----+----------+--------------------+
+| ID | name     | description        |
++----+----------+--------------------+
+|  1 | saleel   | description Text 1 |
+|  2 | vrushali | description Text 2 |
+|  3 | sharmin  | description Text 3 |
+|  4 | ruhan    | description Text 4 |
++----+----------+--------------------+
+4 rows in set (0.01 sec)
+
+mysql> alter view v3 as select id, name from customer;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from v3;
++----+----------+
+| id | name     |
++----+----------+
+|  1 | saleel   |
+|  2 | vrushali |
+|  3 | sharmin  |
+|  4 | ruhan    |
++----+----------+
+4 rows in set (0.00 sec)
+
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from v3;
++----+----------+
+| id | name     |
++----+----------+
+|  1 | saleel   |
+|  2 | vrushali |
+|  3 | sharmin  |
+| 10 | ruhan    |
++----+----------+
+4 rows in set (0.00 sec)
+
+mysql> delete from v3 where name="Sharmin";
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from v3;
++----+----------+
+| id | name     |
++----+----------+
+|  1 | saleel   |
+|  2 | vrushali |
+| 10 | ruhan    |
++----+----------+
+3 rows in set (0.00 sec)
+
+mysql> drop view v3;
+Query OK, 0 rows affected (0.02 sec)
+
+----------------------------------------------------------------------------
